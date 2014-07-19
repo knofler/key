@@ -1,0 +1,43 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <h1>FBE Security System</h1>
+    <p class="lead">Respond to security threat by sending alarm</p>
+    <img src="assets/images/MQ_FBE_Logo.png" alt="FBE">
+  </div>
+</header>
+
+<div class="container" ng-controller="StatusCtrl">
+  	<div class="row">
+	    <div class="col-lg-12">
+		     <h1 class="page-header">Security Monitorng System</h1>
+		     <div><h3 id="status" ng-class={green:isConnected()}>Waiting for input</h3></div>
+			<br>Connected Clients:<br><br>
+				<div class="row">
+					<div id="connected_clients">
+					<ul class="nav nav-tabs nav-stacked col-lg-9" ng-repeat="issue in issueLog">
+						<li><span>{{$index+1}} .</span>{{issue}}</li>
+					</ul>
+
+					</div>
+				</div>
+			<br>Messages:<br><br>
+			
+				<div class="row">
+					<div id="messages">
+					<ul class="nav nav-tabs nav-stacked col-lg-9" ng-repeat="msg in alarms track by $index">
+						<li><span>{{$index+1}} . </span>{{msg.msg}}</li>
+					</ul>
+					</div>
+				</div
+	   </div>
+	</div>
+</div>	
+
+<footer class="footer">
+  <div class="container">
+      <p><a href="https://twitter.com/merumman">@merumman</a> |
+         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
+  </div>
+</footer>
