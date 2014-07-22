@@ -18,6 +18,8 @@ function onConnect(socket) {
   });
   // Insert sockets below
   require('../api/thing/thing.socket').register(socket);
+  require('../api/client/client.socket').register(socket);
+  require('../api/status/status.socket').register(socket);
 }
 
 module.exports = function (socketio) {
@@ -44,12 +46,7 @@ module.exports = function (socketio) {
                        socket.handshake.address.port;
       socket.connectedAt = new Date();
 
-     
-      //Recieve emitted dat from client Controllers
-      socket.on('sendFromClient',function(data){
-        socket.broadcast.emit('sendtoClient',data);
-      });
-   
+      
       // Call onDisconnect.
       socket.on('disconnect', function () {
         onDisconnect(socket);
@@ -57,13 +54,18 @@ module.exports = function (socketio) {
       });
 
       socket.on('toServer',function(){
-          socketio.sockets.emit('display_data');
+          socket.broadcast.emit('display_data');
       });
 
-       socket.on('connect_info',function(data){
-          socketio.sockets.emit('client_connected',{message: 'Client '+ socket.id + ' from computer ' + require('os').hostname() + 
-                                              ' ip address : ' + socket.address});
+      socket.on('userToserver',function(){
+          socket.broadcast.emit('display_usr');
       });
+
+
+      socket.on('connect_info',function(){
+          socket.broadcast.emit('client_connected',{message: 'Client '+ socket.id + ' from computer ' + require('os').hostname() + 
+                                              ' ip address : ' + socket.address});
+      }); 
 
       // Call onConnect.
       onConnect(socket);

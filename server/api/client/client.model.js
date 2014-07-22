@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var ClientSchema = new Schema({
-  name: String,
+  usr: String,
   info: String,
   active: Boolean
 });

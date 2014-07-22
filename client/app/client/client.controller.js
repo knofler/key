@@ -3,25 +3,6 @@
 angular.module('keyApp')
   .controller('ClientCtrl', function ($scope,$http,socket) {
     $scope.message = 'Hello';
-
-    $scope.datalist=[];
-
-
-    // //Incoming data from server to modify model for display.
-   	$scope.$on('sendtoClient',function(data){
-   		$scope.datalist.push(data);
-   	})
-
-
-    $scope.createData=function(){	
-    	var data= {
-    		msg:$scope.newData
-    	};
-
-    	$scope.datalist.push(data);
-    	// $scope.$emit('sendFromClient',data);
-    	$scope.newData='';
-    }
  
      $scope.firstConnect=true;   
      $scope.socket;
@@ -31,14 +12,14 @@ angular.module('keyApp')
         return true;
       }
     }
+
     $scope.connect= function(){
         if($scope.firstConnect){
             $scope.socket=io.connect();
             $scope.socket.on('connect', function(req,res){
                    $('#status').html("Connected to server");
                    $scope.send_connect_info();
-                   // $scope.send();
-                   
+                   $scope.send();
             });
 
             $scope.socket.on('disconnect',function(){$('#status').html("Disonnected From server client");});
@@ -50,21 +31,26 @@ angular.module('keyApp')
         }
     };
 
-     console.log(socket.socket);    
-    
     $scope.disconnect=function() {
         $scope.socket.disconnect();
     };
     
      $scope.send_connect_info =function(){
-        $scope.socket.emit('connect_info',{
-         data:'I am from client connection'
-        });
+        $scope.socket.emit('connect_info');
+        $scope.addData();
     };
+
+    $scope.addData = function(){
+        socket.socket.on('client_connected',function(data){
+        $http.post('/api/clients',{usr:data.message});
+        socket.socket.emit('userToserver');       
+    }); 
+    }
+
 
     $scope.send =function(){
 		var data='Help ! Help ! Help!';
 		$http.post('/api/statuss',{msg:data});
-        $scope.socket.emit('toServer',{data:'http get command run'});
+        $scope.socket.emit('toServer');
     };
   });
