@@ -17,6 +17,7 @@ function onConnect(socket) {
     console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
   });
   // Insert sockets below
+  require('../api/device/device.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
   require('../api/client/client.socket').register(socket);
   require('../api/status/status.socket').register(socket);
@@ -42,8 +43,7 @@ module.exports = function (socketio) {
 
 
     socketio.sockets.on('connection', function (socket) {
-      socket.address = socket.handshake.address.address + ':' +
-                       socket.handshake.address.port;
+      socket.address = socket.handshake.address.address ;
       socket.connectedAt = new Date();
 
       
@@ -57,19 +57,25 @@ module.exports = function (socketio) {
           socket.broadcast.emit('display_data');
       });
 
-      socket.on('userToserver',function(){
-          socket.broadcast.emit('display_usr');
+      socket.on('userToserver',function(data){
+          socket.broadcast.emit('display_usr',{usrData:data.deviceData});
       });
 
 
-      socket.on('connect_info',function(){
-          socket.broadcast.emit('client_connected',{message: 'Client '+ socket.id + ' from computer ' + require('os').hostname() + 
-                                              ' ip address : ' + socket.address});
-      }); 
+  socket.on('connect_info',function(){
+    socket.broadcast.emit('client_connected',{
+      message :{
+          info: 'Client '+ socket.id + ' from computer ' + require('os').hostname() + ' platform ' + process.platform,
+          ipaddress : socket.address
+      }
+    
+  });
+  }); 
 
       // Call onConnect.
       onConnect(socket);
       console.info('[%s] CONNECTED', socket.address);  
+      // console.info(require(fs).readdirSync('/usr/rumman/Code/key/client/app'));
     });
 
 };

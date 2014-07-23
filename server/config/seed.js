@@ -6,6 +6,7 @@
 'use strict';
 
 var Thing = require('../api/thing/thing.model');
+var Device = require('../api/device/device.model');
 var User = require('../api/user/user.model');
 
 Thing.find({}).remove(function() {
@@ -28,6 +29,28 @@ Thing.find({}).remove(function() {
     name : 'Deployment Ready',
     info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
   });
+});
+
+Device.find({}).remove(function() {
+  Device.create({
+      MachineName: "fbe-100172",
+      LoginName: "mq20120517",
+      IPAddress: "10.41.243.107",
+      LANAddress: "00226819B78C",
+      SerialNumber: "R8HKRRP",
+      Memory: 4096,
+      LastScanDate: "09/30/2013"
+  },
+    {
+      MachineName: "Test",
+      LoginName: "mqTest",
+      IPAddress: "127.0.0.1",
+      LANAddress: "RUMMAN819B78C",
+      SerialNumber: "RUMMANKRRP",
+      Memory: 160596,
+      LastScanDate: "12/10/2003"
+  } 
+  );
 });
 
 User.find({}).remove(function() {
