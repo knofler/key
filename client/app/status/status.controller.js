@@ -48,6 +48,7 @@ angular.module('keyApp')
         $scope.userLog = userfromApi;
         socket.syncUpdates('client',$scope.userLog);
       });  
+      console.log(data);
       $scope.deviceLog=data;
   });
 

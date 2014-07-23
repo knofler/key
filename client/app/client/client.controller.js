@@ -31,6 +31,22 @@ angular.module('keyApp')
         }
     };
 
+
+    $scope.addData = function(){
+        socket.socket.on('client_connected',function(data){
+          var ipaddress= data.message.ipaddress;
+          $http.post('/api/clients',{usr:ipaddress});
+            $http.get('/api/devices/'+ipaddress).success(function(devicefromApi) {
+                var usrData ='device : ' + devicefromApi.MachineName + ' login : ' + devicefromApi.LoginName + 
+                             ' ipAddress : ' + devicefromApi.IPAddress + ' LANAddress : ' + devicefromApi.LANAddress ;
+                    console.log('getUsrData from http loop : ' + usrData);
+                    $scope.getUsrData= usrData; 
+                    console.log($scope.getUsrData);
+             socket.socket.emit('userToserver',{deviceData:usrData}); 
+            });
+        }); 
+    }
+
     $scope.disconnect=function() {
         $scope.socket.disconnect();
     };
@@ -40,39 +56,10 @@ angular.module('keyApp')
         $scope.addData();
     };
 
-   
-
-    $scope.getUserInfo =function(ipaddress){
-    
-       $http.get('/api/devices/' +ipaddress).success(function(devicefromApi) {
-        var usrData ='device : ' + devicefromApi.MachineName + ' login : ' + devicefromApi.LoginName + 
-        ' ipAddress : ' + devicefromApi.IPAddress + ' LANAddress : ' + devicefromApi.LANAddress ;
-        console.log('getUsrData from http loop : ' + usrData);
-          $scope.getUsrData= usrData; 
-           console.log($scope.getUsrData);
-      });
-
-    }
-    
-
-    $scope.addData = function(){
-        socket.socket.on('client_connected',function(data){
-          var ipaddress= data.message.ipaddress;
-        $http.post('/api/clients',{usr:ipaddress});
-        $http.get('/api/devices/' +ipaddress).success(function(devicefromApi) {
-        var usrData ='device : ' + devicefromApi.MachineName + ' login : ' + devicefromApi.LoginName + 
-        ' ipAddress : ' + devicefromApi.IPAddress + ' LANAddress : ' + devicefromApi.LANAddress ;
-        console.log('getUsrData from http loop : ' + usrData);
-          $scope.getUsrData= usrData; 
-           console.log($scope.getUsrData);
-      });
-          socket.socket.emit('userToserver',{deviceData:$scope.getUsrData});     
-        }); 
-    }
 
     $scope.send =function(){
-		var data='Help ! Help ! Help!';
-		$http.post('/api/statuss',{msg:data});
+    var data='Help ! Help ! Help!';
+    $http.post('/api/statuss',{msg:data});
         $scope.socket.emit('toServer');
     };
   });
