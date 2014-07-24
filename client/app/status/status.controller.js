@@ -17,6 +17,11 @@ angular.module('keyApp')
         socket.syncUpdates('client',$scope.userLog);
   });
 
+  $http.get('/api/connect_logs').success(function(devicefromApi) {
+        $scope.deviceLog = devicefromApi;
+        socket.syncUpdates('connect_log',$scope.deviceLog);
+  });
+
   $scope.count= 1;
   
   $scope.isConnected =function(){
@@ -25,7 +30,6 @@ angular.module('keyApp')
       }
   }
   
-
 
   socket.socket.on('connect', function(){$('#status').html("Server connected,Ready to serve");});
   socket.socket.on('disconnect', function(){$('#status').html("Disonnected From server");});
@@ -43,13 +47,11 @@ angular.module('keyApp')
 	    });   	
   });
 
-  socket.socket.on('display_usr',function(data){
-      $http.get('/api/clients').success(function(userfromApi) {
-        $scope.userLog = userfromApi;
-        socket.syncUpdates('client',$scope.userLog);
+  socket.socket.on('display_device',function(){
+      $http.get('/api/connect_logs').success(function(devicefromApi) {
+        $scope.deviceLog = devicefromApi;
+        socket.syncUpdates('connect_log',$scope.deviceLog);
       });  
-      console.log(data);
-      $scope.deviceLog=data;
   });
 
     

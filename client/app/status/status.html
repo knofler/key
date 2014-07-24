@@ -13,7 +13,8 @@
 	    <div class="col-lg-12">
 		     <h1 class="page-header">Security Monitorng System</h1>
 		     <div><h3 id="status" ng-class={green:isConnected()}>Waiting for input</h3></div>
-			<br>Connected Clients:<br><br>
+			
+		<!-- 	<br>Connected Clients:<br><br>
 				<div class="row">
 					<div id="connected_clients">
 					<ul class="nav nav-tabs nav-stacked col-lg-9" ng-repeat="usr in userLog">
@@ -30,15 +31,27 @@
 						<li><span>{{$index+1}} . </span>{{msg.msg}}</li>
 					</ul>
 					</div>
-				</div>
+				</div> -->
 			<br>Device Info:<br><br>
 
 				<div class="row">
 					<div id="device">
-				<!-- 	<ul class="nav nav-tabs nav-stacked col-lg-9" ng-repeat="device in deviceLog track by $index">
-						<li><span>{{$index+1}} . </span>{{device.usrData}}</li>
-					</ul> -->
-					{{deviceLog.usrData}}
+					<ul class="nav nav-tabs nav-stacked col-lg-12" ng-repeat="device in deviceLog track by $index">
+						<li><span>{{$index+1}} . </span>
+							<ul class="nav nav-tabs nav-stacked col-lg-6">
+								<li>Name: <b>{{device.jobtitle}} {{device.fname}} {{device.lname}}</b></li>
+								<li>Oneid: {{device.oneid}}</li>
+								<li>Location: {{device.location}}</li>
+								<li>Phone: <b>{{device.phone}}</b></li>
+								<li>Email: {{device.email}}</li>
+								<li>Device: {{device.device}}</li>
+								<li>IP Address:<b>{{device.ipaddress}}</b></li>
+								<li>MAC Address: {{device.lanaddress}}</li>
+								<li>Reported: {{device.created}}</li>
+							</ul>	
+						</li>
+					</ul>
+			<!-- 		{{deviceLog.usrData}} -->
 					</div>
 				</div
 

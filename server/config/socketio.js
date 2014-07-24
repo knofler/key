@@ -17,6 +17,7 @@ function onConnect(socket) {
     console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
   });
   // Insert sockets below
+  require('../api/connect_log/connect_log.socket').register(socket);
   require('../api/device/device.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
   require('../api/client/client.socket').register(socket);
@@ -57,8 +58,8 @@ module.exports = function (socketio) {
           socket.broadcast.emit('display_data');
       });
 
-      socket.on('userToserver',function(data){
-          socket.broadcast.emit('display_usr',{usrData:data.deviceData});
+      socket.on('deviceToserver',function(data){
+          socket.broadcast.emit('display_device');
       });
 
 
@@ -75,7 +76,6 @@ module.exports = function (socketio) {
       // Call onConnect.
       onConnect(socket);
       console.info('[%s] CONNECTED', socket.address);  
-      // console.info(require(fs).readdirSync('/usr/rumman/Code/key/client/app'));
     });
 
 };

@@ -34,16 +34,37 @@ angular.module('keyApp')
 
     $scope.addData = function(){
         socket.socket.on('client_connected',function(data){
-          var ipaddress= data.message.ipaddress;
-          $http.post('/api/clients',{usr:ipaddress});
-            $http.get('/api/devices/'+ipaddress).success(function(devicefromApi) {
-                var usrData ='device : ' + devicefromApi.MachineName + ' login : ' + devicefromApi.LoginName + 
-                             ' ipAddress : ' + devicefromApi.IPAddress + ' LANAddress : ' + devicefromApi.LANAddress ;
-                    console.log('getUsrData from http loop : ' + usrData);
-                    $scope.getUsrData= usrData; 
-                    console.log($scope.getUsrData);
-             socket.socket.emit('userToserver',{deviceData:usrData}); 
-            });
+        var ipaddress= data.message.ipaddress;
+        var info =data.message.info;
+            $http.post('/api/clients',{usr:info + " " +ipaddress});
+              $http.get('/api/devices/'+ipaddress).success(function(devicefromApi) {
+              $http.post('/api/connect_logs',{
+                    device          :devicefromApi.ComputerName,
+                    oneid           :devicefromApi.OneID,
+                    jobtitle        :devicefromApi.JobTitle,
+                    fname           :devicefromApi.FirstName,
+                    lname           :devicefromApi.LastName,
+                    email           :devicefromApi.EmailAddress,
+                    officelocation  :devicefromApi.OfficeLocation,
+                    phone           :devicefromApi.PhoneNumber,
+                    systembrand     :devicefromApi.SystemBrand,
+                    make            :devicefromApi.Make,
+                    model           :devicefromApi.Model,
+                    processor       :devicefromApi.ProcessorType,
+                    cpu             :devicefromApi.CPUSPEED,
+                    lastimaged      :devicefromApi.LastImaged,
+                    hdd             :devicefromApi.HardDiskSize,
+                    freedisk        :devicefromApi.FreeDiskSpace,
+                    ipaddress       :devicefromApi.IPAddress,
+                    lanaddress      :devicefromApi.MACAddress,
+                    serial          :devicefromApi.SerialNumber,
+                    ram             :devicefromApi.Memory,
+                    lastcontact     :devicefromApi.LastContractMade,
+                    lastagentconnect:devicefromApi.LastAgentLoad,
+                    created: new Date()
+              });
+                socket.socket.emit('deviceToserver'); 
+              });
         }); 
     }
 
