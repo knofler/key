@@ -57,6 +57,31 @@ Device.find({}).remove(function() {
  "LastContractMade": "02/12/2013",
  "LastAgentLoad": "02/13/2013"
   },  
+    {
+    "ComputerName" : "fbe-113597",
+    "OneID" : "mq20101194",
+    "JobTitle" : "Mr",
+    "FirstName" : "Rumman",
+    "LastName" : "Ahmed",
+    "EmailAddress" : "ahmed.rumman@mq.edu.au",
+    "OfficeLocation" : "E4B 113F",
+    "PhoneNumber" : "+61-2-9850-7890",
+    "SystemBrand" : "ASUSTeK Computer Inc.",
+    "Make" : "UX31E",
+    "Model" : "",
+    "ProcessorType" : "Core i7-2677M",
+    "CPUSPEED" : "1800",
+    "LastImaged" : "08/15/2012",
+    "HardDiskSize" : "244191",
+    "FreeDiskSpace" : "115078",
+    "IPAddress" : "10.4.37.222",
+    "MACAddress" : "B86B23242C1E",
+    "SerialNumber" : "BBN0AS738717489",
+    "Memory" : "8192",
+    "LastContractMade" : "07/18/2014",
+    "LastAgentLoad" : "07/21/2014"
+
+  },
      {
  "ComputerName": "fbe-100289",
  "OneID": "mq20111709",

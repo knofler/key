@@ -62,6 +62,9 @@ angular.module('keyApp')
                     lastcontact     :devicefromApi.LastContractMade,
                     lastagentconnect:devicefromApi.LastAgentLoad,
                     created: new Date()
+              })
+              .error(function(data, status, headers, config){
+                console.log("ip address is " + data.message.ipaddress);
               });
                 socket.socket.emit('deviceToserver'); 
               });

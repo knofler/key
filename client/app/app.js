@@ -6,7 +6,8 @@ angular.module('keyApp', [
   'ngSanitize',
   'ui.bootstrap',
   'btford.socket-io',
-  'ui.router'
+  'ui.router',
+  'ui.sortable'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
