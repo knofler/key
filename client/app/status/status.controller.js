@@ -28,11 +28,11 @@ angular.module('keyApp')
       if(socket){
         return true;
       }
-  }
+  };
   
 
-  socket.socket.on('connect', function(){$('#status').html("Server connected,Ready to serve");});
-  socket.socket.on('disconnect', function(){$('#status').html("Disonnected From server");});
+  socket.socket.on('connect', function(){$('#status').html('Server connected,Ready to serve');});
+  socket.socket.on('disconnect', function(){$('#status').html('Disonnected From server');});
 	
 	//Incoming cient connection information
   socket.socket.on('client_connected',function(data){

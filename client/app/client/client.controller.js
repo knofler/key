@@ -5,25 +5,26 @@ angular.module('keyApp')
     $scope.message = 'Hello';
       
      $scope.firstConnect=true;   
-     $scope.socket;
-     $scope.getUsrData="";
+     $scope.socket='';
+     $scope.getUsrData='';
+
 
      $scope.isConnected =function(){
       if($scope.socket){
         return true;
       }
-    }
+    };
 
     $scope.connect= function(){
         if($scope.firstConnect){
             $scope.socket=io.connect();
-            $scope.socket.on('connect', function(req,res){
-                   $('#status').html("Connected to server");
-                   $scope.send_connect_info();
+            $scope.socket.on('connect', function(){
+                   $('#status').html('Connected to server');
+                   $scope.sendConnectInfo();
                    $scope.send();
             });
-            $scope.socket.on('disconnect',function(){$('#status').html("Disonnected From server client");});
-            $scope.socket.on('reconnect',function(nextRetry){$('#status').html("Reconnection " + nextRetry + " in milliseconds .");});     
+            $scope.socket.on('disconnect',function(){$('#status').html('Disonnected From server client');});
+            $scope.socket.on('reconnect',function(nextRetry){$('#status').html('Reconnection ' + nextRetry + ' in milliseconds .');});     
             $scope.socket.on('reconnect_failed',function(){$('#status').html('Reconnect Failed');});
         $scope.firstConnect=false;
         }else{
@@ -36,7 +37,7 @@ angular.module('keyApp')
         socket.socket.on('client_connected',function(data){
         var ipaddress= data.message.ipaddress;
         var info =data.message.info;
-            $http.post('/api/clients',{usr:info + " " +ipaddress});
+            $http.post('/api/clients',{usr:info + ' ' +ipaddress});
               $http.get('/api/devices/'+ipaddress).success(function(devicefromApi) {
               $http.post('/api/connect_logs',{
                     device          :devicefromApi.ComputerName,
@@ -63,19 +64,19 @@ angular.module('keyApp')
                     lastagentconnect:devicefromApi.LastAgentLoad,
                     created: new Date()
               })
-              .error(function(data, status, headers, config){
-                console.log("ip address is " + data.message.ipaddress);
+              .error(function(data){
+                console.log('ip address is ' + data.message.ipaddress);
               });
                 socket.socket.emit('deviceToserver'); 
               });
         }); 
-    }
+    };
 
     $scope.disconnect=function() {
         $scope.socket.disconnect();
     };
     
-     $scope.send_connect_info =function(){
+     $scope.sendConnectInfo =function(){
         $scope.socket.emit('connect_info');
         $scope.addData();
     };

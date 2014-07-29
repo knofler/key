@@ -85,10 +85,6 @@ angular.module('keyApp')
       unsyncUpdates: function (modelName) {
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
-      },
-
-       rumman: function () {
-        alert("this is rumman");
       }
-    }
+    };
   });
