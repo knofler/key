@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('keyApp')
-  .controller('StatusCtrl',['$scope','$http','socket',function ($scope,$http,socket) {
+  .controller('StatusCtrl',['$scope','$http','Auth','User','socket',function ($scope,$http,Auth,User,socket) {
     $scope.alarms = [];
     $scope.issueLog=[];
     $scope.userLog=[];

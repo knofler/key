@@ -2,10 +2,15 @@
 
 angular.module('keyApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
-    $scope.menu = [{
-      'title': 'Home',
-      'link': '/'
-    }];
+    $scope.menu = [
+      {'title': 'Home','link': '/'},
+      {'title': 'Client','link': '/client'}
+    ];
+
+    $scope.status =[{
+      'title': 'Status','link': '/status'
+      }
+    ];
 
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;

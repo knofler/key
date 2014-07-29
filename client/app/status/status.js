@@ -6,6 +6,7 @@ angular.module('keyApp')
       .state('status', {
         url: '/status',
         templateUrl: 'app/status/status.html',
-        controller: 'StatusCtrl'
+        controller: 'StatusCtrl',
+         authenticate: true
       });
   });
